@@ -2,7 +2,7 @@
   "schema_version": "1.0.0",
   "elements": [
     {
-      "description": "`api-headers-document`\n\nA documentation for API headers.\n\nIt uses [AMF](https://github.com/mulesoft/amf) json/ld model to render\nthe view.\n\n## Example\n\n```html\n<api-headers-document headers=\"[...]\" opened></api-headers-document>\n```\n\n## Styling\n\n`<api-headers-document>` provides the following custom properties and mixins for styling:\n\nCustom property | Description | Default\n----------------|-------------|----------\n`--api-headers-document` | Mixin applied to this elment | `{}`\n`--api-headers-document-title-border-color` | Border color of the title area | `#e5e5e5`\n`--api-headers-document-toggle-view-color` | Color of the toggle button | `--arc-toggle-view-icon-color` or `rgba(0, 0, 0, 0.74)`\n`--toggle-button` | Theme style, mixin apllied to toggle button | `{}`\n`--api-headers-document-toggle-view-hover-color` | Color of the toggle button when hovering. Please, mind that hover is not available on all devices.| `--arc-toggle-view-icon-hover-color` or `rgba(0, 0, 0, 0.88)`\n`--toggle-button-hover` | Theme style, mixin apllied to toggle button when hovered. | `{}`\n`--api-headers-document-title` | Mixin applied to the title element | `{}`",
+      "description": "`api-headers-document`\n\nA documentation for API headers.\n\nIt uses [AMF](https://github.com/mulesoft/amf) json/ld model to render\nthe view.\n\n## Example\n\n```html\n<api-headers-document headers=\"[...]\" opened></api-headers-document>\n```\n\n## Styling\n\n`<api-headers-document>` provides the following custom properties and mixins for styling:\n\nCustom property | Description | Default\n----------------|-------------|----------\n`--api-headers-document` | Mixin applied to this elment | `{}`\n`--api-headers-document-title-border-color` | Border color of the title area | `#e5e5e5`\n`--api-headers-document-toggle-view-color` | Color of the toggle button | `--arc-toggle-view-icon-color` or `rgba(0, 0, 0, 0.74)`\n`--toggle-button` | Theme style, mixin apllied to toggle button | `{}`\n`--api-headers-document-toggle-view-hover-color` | Color of the toggle button when hovering. Please, mind that hover is not available on all devices.| `--arc-toggle-view-icon-hover-color` or `rgba(0, 0, 0, 0.88)`\n`--toggle-button-hover` | Theme style, mixin apllied to toggle button when hovered. | `{}`\n`--api-headers-document-title` | Mixin applied to the title element | `{}`\n`--api-headers-document-title-narrow` | Mixin applied to the title when in narrow layout | `{}`\n`--no-info-message` | Theme mixin, applied to all empty info messages | `{}`",
       "summary": "",
       "path": "api-headers-document.html",
       "properties": [
@@ -611,11 +611,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 123,
+              "line": 129,
               "column": 8
             },
             "end": {
-              "line": 123,
+              "line": 129,
               "column": 21
             }
           },
@@ -632,11 +632,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 134,
+              "line": 140,
               "column": 8
             },
             "end": {
-              "line": 134,
+              "line": 140,
               "column": 24
             }
           },
@@ -653,11 +653,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 138,
+              "line": 144,
               "column": 8
             },
             "end": {
-              "line": 138,
+              "line": 144,
               "column": 22
             }
           },
@@ -674,11 +674,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 142,
+              "line": 148,
               "column": 8
             },
             "end": {
-              "line": 146,
+              "line": 152,
               "column": 9
             }
           },
@@ -697,12 +697,33 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 151,
+              "line": 157,
               "column": 8
             },
             "end": {
-              "line": 151,
+              "line": 157,
               "column": 23
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "attributeType": "Boolean"
+            }
+          }
+        },
+        {
+          "name": "narrow",
+          "type": "boolean | null | undefined",
+          "description": "A property passed to the type document element to render\na mogile friendly view.",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 162,
+              "column": 8
+            },
+            "end": {
+              "line": 165,
+              "column": 9
             }
           },
           "metadata": {
@@ -2891,11 +2912,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 159,
+              "line": 173,
               "column": 4
             },
             "end": {
-              "line": 161,
+              "line": 175,
               "column": 5
             }
           },
@@ -2917,11 +2938,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 164,
+              "line": 178,
               "column": 4
             },
             "end": {
-              "line": 166,
+              "line": 180,
               "column": 5
             }
           },
@@ -2938,11 +2959,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 169,
+              "line": 183,
               "column": 4
             },
             "end": {
-              "line": 175,
+              "line": 189,
               "column": 5
             }
           },
@@ -2959,11 +2980,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 180,
+              "line": 194,
               "column": 4
             },
             "end": {
-              "line": 182,
+              "line": 196,
               "column": 5
             }
           },
@@ -3918,11 +3939,11 @@
       "metadata": {},
       "sourceRange": {
         "start": {
-          "line": 116,
+          "line": 122,
           "column": 2
         },
         "end": {
-          "line": 183,
+          "line": 197,
           "column": 3
         }
       },
@@ -3935,11 +3956,11 @@
           "description": "`raml-aware` scope property to use.",
           "sourceRange": {
             "start": {
-              "line": 123,
+              "line": 129,
               "column": 8
             },
             "end": {
-              "line": 123,
+              "line": 129,
               "column": 21
             }
           },
@@ -3951,11 +3972,11 @@
           "description": "Generated AMF json/ld model form the API spec.\nThe element assumes the object of the first array item to be a\ntype of `\"http://raml.org/vocabularies/document#Document`\non AMF vocabulary.\n\nIt is only usefult for the element to resolve references.",
           "sourceRange": {
             "start": {
-              "line": 134,
+              "line": 140,
               "column": 8
             },
             "end": {
-              "line": 134,
+              "line": 140,
               "column": 24
             }
           },
@@ -3967,11 +3988,11 @@
           "description": "The headers AMF model Array.",
           "sourceRange": {
             "start": {
-              "line": 138,
+              "line": 144,
               "column": 8
             },
             "end": {
-              "line": 138,
+              "line": 144,
               "column": 22
             }
           },
@@ -3983,11 +4004,11 @@
           "description": "Computed value from the `headers`. True if has headers.",
           "sourceRange": {
             "start": {
-              "line": 142,
+              "line": 148,
               "column": 8
             },
             "end": {
-              "line": 146,
+              "line": 152,
               "column": 9
             }
           },
@@ -3999,12 +4020,28 @@
           "description": "Set to true to open the view.\nAutormatically set when the view is toggle from the UI.",
           "sourceRange": {
             "start": {
-              "line": 151,
+              "line": 157,
               "column": 8
             },
             "end": {
-              "line": 151,
+              "line": 157,
               "column": 23
+            }
+          },
+          "metadata": {},
+          "type": "boolean | null | undefined"
+        },
+        {
+          "name": "narrow",
+          "description": "A property passed to the type document element to render\na mogile friendly view.",
+          "sourceRange": {
+            "start": {
+              "line": 162,
+              "column": 8
+            },
+            "end": {
+              "line": 165,
+              "column": 9
             }
           },
           "metadata": {},
