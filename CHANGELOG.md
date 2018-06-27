@@ -1,3 +1,14 @@
+<a name="2.0.2"></a>
+## 2.0.2 (2018-06-27)
+
+
+### Update
+
+* Added sauce configuration for tests ([ba555c08e52795def3e2cba06d2073aaa3c6f83a](https://github.com/advanced-rest-client/api-headers-document/commit/ba555c08e52795def3e2cba06d2073aaa3c6f83a))
+* Adding `narrow` property and updating styling API ([1fc69eb7b2226c6882488ef0d1ac371711a6c91d](https://github.com/advanced-rest-client/api-headers-document/commit/1fc69eb7b2226c6882488ef0d1ac371711a6c91d))
+
+
+
 <a name="2.0.1"></a>
 ## 2.0.1 (2018-06-26)
 
