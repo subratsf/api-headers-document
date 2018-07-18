@@ -624,7 +624,7 @@
                             ],
                             "http://a.ml/vocabularies/shapes#items": [
                               {
-                                "@id": "file://demo/api.raml#/web-api/end-points/%2Ftest/get/request/parameter/x-repeat/array/schema/scalar/items",
+                                "@id": "file://demo/api.raml#/web-api/end-points/%2Ftest/get/request/parameter/x-repeat/array/schema/items/scalar/items",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#ScalarShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -684,40 +684,20 @@
                         ],
                         "http://a.ml/vocabularies/http#schema": [
                           {
-                            "@id": "file://demo/api.raml#/web-api/end-points/%2Ftest/get/request/parameter/x-unionable/union/schema/union/default-union",
+                            "@id": "file://demo/api.raml#/web-api/end-points/%2Ftest/get/request/parameter/x-unionable/union/schema/union/default-union/linked_1",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#UnionShape",
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://a.ml/vocabularies/shapes#Shape"
                             ],
-                            "http://a.ml/vocabularies/shapes#anyOf": [
+                            "http://a.ml/vocabularies/document#link-target": [
                               {
-                                "@id": "file://demo/api.raml#/web-api/end-points/%2Ftest/get/request/parameter/x-unionable/union/schema/scalar/scalar-expression-0",
-                                "@type": [
-                                  "http://a.ml/vocabularies/shapes#ScalarShape",
-                                  "http://www.w3.org/ns/shacl#Shape",
-                                  "http://a.ml/vocabularies/shapes#Shape",
-                                  "http://a.ml/vocabularies/document#DomainElement"
-                                ],
-                                "http://www.w3.org/ns/shacl#datatype": [
-                                  {
-                                    "@id": "http://www.w3.org/2001/XMLSchema#string"
-                                  }
-                                ]
-                              },
+                                "@id": "file://demo/api.raml#/web-api/end-points/%2Ftest/get/request/parameter/x-unionable/union/schema/union/default-union"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document#link-label": [
                               {
-                                "@id": "file://demo/api.raml#/web-api/end-points/%2Ftest/get/request/parameter/x-unionable/union/schema/scalar/scalar-expression-2",
-                                "@type": [
-                                  "http://a.ml/vocabularies/shapes#ScalarShape",
-                                  "http://www.w3.org/ns/shacl#Shape",
-                                  "http://a.ml/vocabularies/shapes#Shape",
-                                  "http://a.ml/vocabularies/document#DomainElement"
-                                ],
-                                "http://www.w3.org/ns/shacl#datatype": [
-                                  {
-                                    "@id": "http://a.ml/vocabularies/shapes#number"
-                                  }
-                                ]
+                                "@value": "type_1"
                               }
                             ]
                           }
@@ -1020,6 +1000,44 @@
         "http://a.ml/vocabularies/document#name": [
           {
             "@value": "clearanceLevel"
+          }
+        ]
+      },
+      {
+        "@id": "file://demo/api.raml#/web-api/end-points/%2Ftest/get/request/parameter/x-unionable/union/schema/union/default-union",
+        "@type": [
+          "http://a.ml/vocabularies/shapes#UnionShape",
+          "http://www.w3.org/ns/shacl#Shape",
+          "http://a.ml/vocabularies/shapes#Shape"
+        ],
+        "http://a.ml/vocabularies/shapes#anyOf": [
+          {
+            "@id": "file://demo/api.raml#/web-api/end-points/%2Ftest/get/request/parameter/x-unionable/union/schema/scalar/scalar-expression-0",
+            "@type": [
+              "http://a.ml/vocabularies/shapes#ScalarShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://www.w3.org/ns/shacl#datatype": [
+              {
+                "@id": "http://www.w3.org/2001/XMLSchema#string"
+              }
+            ]
+          },
+          {
+            "@id": "file://demo/api.raml#/web-api/end-points/%2Ftest/get/request/parameter/x-unionable/union/schema/scalar/scalar-expression-2",
+            "@type": [
+              "http://a.ml/vocabularies/shapes#ScalarShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://www.w3.org/ns/shacl#datatype": [
+              {
+                "@id": "http://a.ml/vocabularies/shapes#number"
+              }
+            ]
           }
         ]
       }
