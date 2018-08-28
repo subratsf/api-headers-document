@@ -127,7 +127,7 @@
    * @memberof ApiElements
    */
   class ApiHeadersDocument extends Polymer.Element {
-    static get is() { return 'api-headers-document'; }
+    static get is() {return 'api-headers-document';}
     static get properties() {
       return {
         /**
@@ -188,7 +188,7 @@
 
     // Computes class for the toggle's button icon.
     _computeToggleIconClass(opened) {
-      var clazz = 'toggle-icon';
+      let clazz = 'toggle-icon';
       if (opened) {
         clazz += ' opened';
       }
