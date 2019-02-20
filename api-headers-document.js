@@ -43,7 +43,7 @@ import '@polymer/paper-button/paper-button.js';
  * @demo demo/index.html
  * @memberof ApiElements
  */
-class ApiHeadersDocument extends PolymerElement {
+export class ApiHeadersDocument extends PolymerElement {
   static get template() {
     return html`
     <style>
