@@ -1,13 +1,10 @@
-import {PolymerElement} from '../../@polymer/polymer/polymer-element.js';
-import {html} from '../../@polymer/polymer/lib/utils/html-tag.js';
-import '../../@polymer/polymer/lib/elements/dom-if.js';
-import '../../@api-components/raml-aware/raml-aware.js';
-import '../../@polymer/iron-flex-layout/iron-flex-layout.js';
-import '../../@api-components/api-type-document/api-type-document.js';
-import '../../@polymer/iron-collapse/iron-collapse.js';
-import '../../@polymer/iron-icon/iron-icon.js';
-import '../../@advanced-rest-client/arc-icons/arc-icons.js';
-import '../../@polymer/paper-button/paper-button.js';
+import { LitElement, html, css } from 'lit-element';
+import '@api-components/raml-aware/raml-aware.js';
+import '@api-components/api-type-document/api-type-document.js';
+import '@polymer/iron-collapse/iron-collapse.js';
+import '@polymer/iron-icon/iron-icon.js';
+import '@advanced-rest-client/arc-icons/arc-icons.js';
+import '@polymer/paper-button/paper-button.js';
 /**
  * `api-headers-document`
  *
@@ -22,34 +19,15 @@ import '../../@polymer/paper-button/paper-button.js';
  * <api-headers-document headers="[...]" opened></api-headers-document>
  * ```
  *
- * ## Styling
- *
- * `<api-headers-document>` provides the following custom properties and mixins for styling:
- *
- * Custom property | Description | Default
- * ----------------|-------------|----------
- * `--api-headers-document` | Mixin applied to this elment | `{}`
- * `--api-headers-document-title-border-color` | Border color of the title area | `#e5e5e5`
- * `--api-headers-document-toggle-view-color` | Color of the toggle button | `--arc-toggle-view-icon-color` or `rgba(0, 0, 0, 0.74)`
- * `--toggle-button` | Theme style, mixin apllied to toggle button | `{}`
- * `--api-headers-document-toggle-view-hover-color` | Color of the toggle button when hovering. Please, mind that hover is not available on all devices.| `--arc-toggle-view-icon-hover-color` or `rgba(0, 0, 0, 0.88)`
- * `--toggle-button-hover` | Theme style, mixin apllied to toggle button when hovered. | `{}`
- * `--api-headers-document-title` | Mixin applied to the title element | `{}`
- * `--api-headers-document-title-narrow` | Mixin applied to the title when in narrow layout | `{}`
- * `--no-info-message` | Theme mixin, applied to all empty info messages | `{}`
- *
  * @customElement
  * @polymer
  * @demo demo/index.html
  * @memberof ApiElements
  */
-export class ApiHeadersDocument extends PolymerElement {
-  static get template() {
-    return html`
-    <style>
-    :host {
+export class ApiHeadersDocument extends LitElement {
+  static get styles() {
+    return css`:host {
       display: block;
-      @apply --api-headers-document;
     }
 
     [hidden] {
@@ -57,8 +35,9 @@ export class ApiHeadersDocument extends PolymerElement {
     }
 
     .section-title-area {
-      @apply --layout-horizontal;
-      @apply --layout-center;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
       cursor: pointer;
       -webkit-user-select: none;
       -moz-user-select: none;
@@ -68,19 +47,21 @@ export class ApiHeadersDocument extends PolymerElement {
     }
 
     .section-title-area h3 {
-      @apply --layout-flex;
+      flex: 1;
+      flex-basis: 0.000000001px;
     }
 
     .toggle-button {
       outline: none;
       color: var(--api-headers-document-toggle-view-color, var(--arc-toggle-view-icon-color, rgba(0, 0, 0, 0.74)));
       transition: color 0.25s ease-in-out;
-      @apply --toggle-button;
+      color: var(--toggle-button-color);
+      font-weight: var(--toggle-button-font-weight);
     }
 
     .toggle-button:hover {
-      color: var(--api-headers-document-toggle-view-hover-color, var(--arc-toggle-view-icon-hover-color, rgba(0, 0, 0, 0.88)));
-      @apply --toggle-button-hover;
+      color: var(--api-headers-document-toggle-view-hover-color,
+        var(--arc-toggle-view-icon-hover-color, rgba(0, 0, 0, 0.88)));
     }
 
     .toggle-icon {
@@ -94,50 +75,56 @@ export class ApiHeadersDocument extends PolymerElement {
     }
 
     .headers-title {
-      @apply --arc-font-title;
-      @apply --api-headers-document-title;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: var(--arc-font-title-font-size);
+      font-weight: var(--arc-font-title-font-weight);
+      line-height: var(--arc-font-title-line-height);
+      letter-spacing: var(--arc-font-title-letter-spacing);
     }
 
     .no-info {
-      @apply --no-info-message;
+      font-style: var(--no-info-message-font-style, italic);
+      font-size: var(--no-info-message-font-size, 16px);
+      color: var(--no-info-message-color, rgba(0, 0, 0, 0.74));
     }
 
     :host([narrow]) .headers-title {
-      @apply --api-headers-document-title-narrow;
-    }
-    </style>
-    <template is="dom-if" if="[[aware]]">
-      <raml-aware raml="{{amfModel}}" scope="[[aware]]"></raml-aware>
-    </template>
-    <div class="section-title-area" on-click="toggle" title="Toogle headers details">
+      font-size: var(--api-headers-document-title-narrow-font-size, 17px);
+    }`;
+  }
+
+  render() {
+    const { aware, opened, headers, amf, narrow } = this;
+    const hasHeaders = !!(headers && headers.length);
+    return html`
+    ${aware ?
+      html`<raml-aware @api-changed="${this._apiChangedHandler}" .scope="${aware}"></raml-aware>` : undefined}
+
+    <div class="section-title-area" @click="${this.toggle}" title="Toogle headers details">
       <h3 class="headers-title">Headers</h3>
       <div class="title-area-actions">
         <paper-button class="toggle-button">
-          [[_computeToggleActionLabel(opened)]]
-          <iron-icon icon="arc:expand-more" class\$="[[_computeToggleIconClass(opened)]]"></iron-icon>
+          ${this._computeToggleActionLabel(opened)}
+          <iron-icon icon="arc:expand-more" class="${this._computeToggleIconClass(opened)}"></iron-icon>
         </paper-button>
       </div>
     </div>
-    <iron-collapse opened="[[opened]]">
-      <template is="dom-if" if="[[hasHeaders]]">
-        <api-type-document amf-model="[[amfModel]]" type="[[headers]]" narrow="[[narrow]]"></api-type-document>
-      </template>
-      <template is="dom-if" if="[[!hasHeaders]]">
-        <p class="no-info">Headers are not required by this endpoint</p>
-      </template>
-    </iron-collapse>
-`;
+
+    <iron-collapse .opened="${opened}">
+      ${hasHeaders ?
+        html`<api-type-document .amf="${amf}" .type="${headers}" ?narrow="${narrow}"></api-type-document>` :
+        html`<p class="no-info">Headers are not required by this endpoint</p>`}
+    </iron-collapse>`;
   }
 
-  static get is() {
-    return 'api-headers-document';
-  }
   static get properties() {
     return {
       /**
        * `raml-aware` scope property to use.
        */
-      aware: String,
+      aware: { type: String },
       /**
        * Generated AMF json/ld model form the API spec.
        * The element assumes the object of the first array item to be a
@@ -148,41 +135,37 @@ export class ApiHeadersDocument extends PolymerElement {
        *
        * @type {Object|Array}
        */
-      amfModel: Object,
+      amf: { type: Object },
       /**
        * The headers AMF model Array.
        */
-      headers: Array,
-      /**
-       * Computed value from the `headers`. True if has headers.
-       */
-      hasHeaders: {
-        type: Boolean,
-        value: false,
-        computed: '_computeHasHeaders(headers.*)'
-      },
+      headers: { type: Array },
       /**
        * Set to true to open the view.
        * Autormatically set when the view is toggle from the UI.
        */
-      opened: Boolean,
+      opened: { type: Boolean },
       /**
        * A property passed to the type document element to render
        * a mogile friendly view.
        */
       narrow: {
         type: Boolean,
-        reflectToAttribute: true
+        reflect: true
       }
     };
   }
   /**
-   * Computes value for `hasHeaders` property
-   * @param {Object} record `headers` change record
-   * @return {Boolean}
+   * Handler for amf model change from `raml-aware`
+   * @param {CustomEvent} e
    */
-  _computeHasHeaders(record) {
-    return !!(record.base && record.base.length);
+  _apiChangedHandler(e) {
+    const { value } = e.detail;
+    setTimeout(() => {
+      this.amf = value;
+      // For some reson this value is not reflected in the render function
+      // unles it is delayed
+    });
   }
 
   // Computes a label for the section toggle buttons.
@@ -206,4 +189,4 @@ export class ApiHeadersDocument extends PolymerElement {
     this.opened = !this.opened;
   }
 }
-window.customElements.define(ApiHeadersDocument.is, ApiHeadersDocument);
+window.customElements.define('api-headers-document', ApiHeadersDocument);

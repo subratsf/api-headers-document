@@ -1,34 +1,45 @@
-# api-headers-document
-
 [![Published on NPM](https://img.shields.io/npm/v/@api-components/api-headers-document.svg)](https://www.npmjs.com/package/@api-components/api-headers-document)
 
-[![Build Status](https://travis-ci.org/api-components/api-headers-document.svg?branch=stage)](https://travis-ci.org/api-components/api-headers-document)
+[![Build Status](https://travis-ci.org/advanced-rest-client/api-headers-document.svg?branch=stage)](https://travis-ci.org/advanced-rest-client/api-headers-document)
 
-[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/api-components/api-headers-document)
+[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/advanced-rest-client/api-headers-document)
 
- ## &lt;api-headers-document&gt;
+## api-headers-document
 
 Documentation component for API headers based on AMF data model.
 
- ```html
- <api-headers-document></api-headers-document>
- ```
+## Styling
 
- ### API components
+`<api-headers-document>` provides the following custom properties and mixins for styling:
 
- This components is a part of [API components ecosystem](https://elements.advancedrestclient.com/)
+Custom property | Description | Default
+----------------|-------------|----------
+`--api-headers-document-title-border-color` | Border color of the title area | `#e5e5e5`
+`--api-headers-document-toggle-view-color` | Color of the toggle button | `--arc-toggle-view-icon-color` or `rgba(0, 0, 0, 0.74)`
+`--api-headers-document-toggle-view-hover-color` | Color of the toggle button when hovering. Please, mind that hover is not available on all devices. | `--arc-toggle-view-icon-hover-color` or `rgba(0, 0, 0, 0.88)`
+`--toggle-button-color`  |   |  ``
+`--toggle-button-font-weight`  |   |  ``
+`-no-info-message-font-style` |   |  `italic`
+`--no-info-message-font-size`  |   |  `16px`
+`--no-info-message-color`  |   |  `rgba(0, 0, 0, 0.74)`
+`--api-headers-document-title-narrow-font-size` |   | `17px`
 
- ## Usage
+### API components
 
- ### Installation
- ```
- npm install --save @api-components/api-headers-document
- ```
+This components is a part of [API components ecosystem](https://elements.advancedrestclient.com/)
 
- ### In an html file
+## Usage
 
- ```html
- <html>
+### Installation
+
+```sh
+npm install --save @api-components/api-headers-document
+```
+
+### In an html file
+
+```html
+<html>
    <head>
      <script type="module">
        import './node_modules/@api-components/api-headers-document/api-headers-document.js';
@@ -37,42 +48,39 @@ Documentation component for API headers based on AMF data model.
    <body>
      <api-headers-document></api-headers-document>
    </body>
- </html>
- ```
+</html>
+```
 
- ### In a Polymer 3 element
+```js
+import { LitElement, html } from 'lit-element';
+import '@api-components/api-headers-document/api-headers-document.js';
 
- ```js
- import {PolymerElement, html} from './node_modules/@polymer/polymer';
- import './node_modules/@api-components/api-headers-document/api-headers-document.js';
+class SampleElement extends PolymerElement {
+  render() {
+    return html`
+    <api-headers-document .amf="${this.amf}"></api-headers-document>
+    `;
+  }
+}
+customElements.define('sample-element', SampleElement);
+```
 
- class SampleElement extends PolymerElement {
-   static get template() {
-     return html`
-     <api-headers-document></api-headers-document>
-     `;
-   }
- }
- customElements.define('sample-element', SampleElement);
- ```
+### Development
 
- ### Installation
+```sh
+git clone https://github.com/api-components/api-headers-document
+cd api-headers-document
+npm install
+```
 
- ```sh
- git clone https://github.com/api-components/api-headers-document
- cd api-url-editor
- npm install
- npm install -g polymer-cli
- ```
+### Running the demo locally
 
- ### Running the demo locally
+```sh
+npm start
+```
 
- ```sh
- polymer serve --npm
- open http://127.0.0.1:<port>/demo/
- ```
+### Running the tests
 
- ### Running the tests
- ```sh
- polymer test --npm
- ```
+```sh
+npm test
+```

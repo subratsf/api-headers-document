@@ -12,9 +12,7 @@
 // tslint:disable:variable-name Describing an API that's defined elsewhere.
 // tslint:disable:no-any describes the API as best we are able today
 
-import {PolymerElement} from '@polymer/polymer/polymer-element.js';
-
-import {html} from '@polymer/polymer/lib/utils/html-tag.js';
+import {LitElement, html, css} from 'lit-element';
 
 export {ApiHeadersDocument};
 
@@ -50,7 +48,7 @@ declare namespace ApiElements {
    * `--api-headers-document-title-narrow` | Mixin applied to the title when in narrow layout | `{}`
    * `--no-info-message` | Theme mixin, applied to all empty info messages | `{}`
    */
-  class ApiHeadersDocument extends PolymerElement {
+  class ApiHeadersDocument extends LitElement {
 
     /**
      * `raml-aware` scope property to use.
@@ -65,17 +63,12 @@ declare namespace ApiElements {
      *
      * It is only usefult for the element to resolve references.
      */
-    amfModel: object|any[]|null;
+    amf: object|any[]|null;
 
     /**
      * The headers AMF model Array.
      */
     headers: any[]|null|undefined;
-
-    /**
-     * Computed value from the `headers`. True if has headers.
-     */
-    readonly hasHeaders: boolean|null|undefined;
 
     /**
      * Set to true to open the view.
@@ -88,13 +81,13 @@ declare namespace ApiElements {
      * a mogile friendly view.
      */
     narrow: boolean|null|undefined;
+    constructor();
+    render(): any;
 
     /**
-     * Computes value for `hasHeaders` property
-     *
-     * @param record `headers` change record
+     * Handler for amf model change from `raml-aware`
      */
-    _computeHasHeaders(record: object|null): Boolean|null;
+    _apiChangedHandler(e: CustomEvent|null): void;
 
     /**
      * Computes a label for the section toggle buttons.
