@@ -5,22 +5,16 @@
  *   https://github.com/Polymer/tools/tree/master/packages/gen-typescript-declarations
  *
  * To modify these typings, edit the source file(s):
- *   api-headers-document.html
+ *   api-headers-document.js
  */
 
 
 // tslint:disable:variable-name Describing an API that's defined elsewhere.
 // tslint:disable:no-any describes the API as best we are able today
 
-/// <reference path="../polymer/types/polymer-element.d.ts" />
-/// <reference path="../polymer/types/lib/elements/dom-if.d.ts" />
-/// <reference path="../raml-aware/raml-aware.d.ts" />
-/// <reference path="../iron-flex-layout/iron-flex-layout.d.ts" />
-/// <reference path="../api-type-document/api-type-document.d.ts" />
-/// <reference path="../iron-collapse/iron-collapse.d.ts" />
-/// <reference path="../iron-icon/iron-icon.d.ts" />
-/// <reference path="../arc-icons/arc-icons.d.ts" />
-/// <reference path="../paper-button/paper-button.d.ts" />
+import {LitElement, html, css} from 'lit-element';
+
+export {ApiHeadersDocument};
 
 declare namespace ApiElements {
 
@@ -54,7 +48,7 @@ declare namespace ApiElements {
    * `--api-headers-document-title-narrow` | Mixin applied to the title when in narrow layout | `{}`
    * `--no-info-message` | Theme mixin, applied to all empty info messages | `{}`
    */
-  class ApiHeadersDocument extends Polymer.Element {
+  class ApiHeadersDocument extends LitElement {
 
     /**
      * `raml-aware` scope property to use.
@@ -69,17 +63,12 @@ declare namespace ApiElements {
      *
      * It is only usefult for the element to resolve references.
      */
-    amfModel: object|any[]|null;
+    amf: object|any[]|null;
 
     /**
      * The headers AMF model Array.
      */
     headers: any[]|null|undefined;
-
-    /**
-     * Computed value from the `headers`. True if has headers.
-     */
-    readonly hasHeaders: boolean|null|undefined;
 
     /**
      * Set to true to open the view.
@@ -92,13 +81,13 @@ declare namespace ApiElements {
      * a mogile friendly view.
      */
     narrow: boolean|null|undefined;
+    constructor();
+    render(): any;
 
     /**
-     * Computes value for `hasHeaders` property
-     *
-     * @param record `headers` change record
+     * Handler for amf model change from `raml-aware`
      */
-    _computeHasHeaders(record: object|null): Boolean|null;
+    _apiChangedHandler(e: CustomEvent|null): void;
 
     /**
      * Computes a label for the section toggle buttons.
@@ -118,6 +107,9 @@ declare namespace ApiElements {
   }
 }
 
-interface HTMLElementTagNameMap {
-  "api-headers-document": ApiElements.ApiHeadersDocument;
+declare global {
+
+  interface HTMLElementTagNameMap {
+    "api-headers-document": ApiElements.ApiHeadersDocument;
+  }
 }

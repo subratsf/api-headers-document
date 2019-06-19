@@ -4,49 +4,34 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
     <title>api-headers-document demo</title>
-    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
-    <link rel="import" href="../../shadycss/apply-shim.html">
-    <link rel="import" href="../../polymer/lib/elements/custom-style.html">
-    <link rel="import" href="../../polymer/lib/elements/dom-bind.html">
-    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
-    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
-    <link rel="import" href="../../paper-styles/typography.html">
-    <link rel="import" href="../../raml-aware/raml-aware.html">
-    <link rel="import" href="../../api-navigation/api-navigation.html">
-    <link rel="import" href="../../paper-dropdown-menu/paper-dropdown-menu.html">
-    <link rel="import" href="../../paper-item/paper-item.html">
-    <link rel="import" href="../../paper-listbox/paper-listbox.html">
-    <link rel="import" href="../../neon-animation/web-animations.html">
-    <link rel="import" href="../../api-console-default-theme/api-console-default-theme.html">
-    <link rel="import" href="../api-headers-document.html">
-    <custom-style>
-      <style is="custom-style" include="demo-pages-shared-styles">
+
+    <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="../node_modules/web-animations-js/web-animations-next.min.js"></script>
+    <script type="module" src="../node_modules/@advanced-rest-client/arc-demo-helper/arc-demo-helper.js"></script>
+
+    <style is="custom-style" include="demo-pages-shared-styles">
       html,
       body {
-        margin: 0;
-        padding: 0;
+        margin: 0 !important;
+        padding: 0 !important;
       }
-      
-      [role="main"] {
+
+      [role="main"].centered {
         max-width: 1100px;
-        @apply --layout-horizontal;
-        @apply --layout-start;
+        display: flex;
+        align-items: flex-start;
       }
 
       header {
         padding: 12px 24px;
         background-color: #C5E1A5;
+        display: flex;
+        align-items: center;
         --iron-icon-fill-color: #3E2723;
         --paper-input-container-focus-color: #33691E;
         --paper-input-container-label: {
           color: #3E2723;
         };
-        @apply --layout-horizontal;
-        @apply --layout-center;
-      }
-
-      .spacer {
-        @apply --layout-flex;
       }
 
       api-navigation {
@@ -57,91 +42,14 @@
 
       api-headers-document {
         margin-left: 40px;
-        @apply --layout-flex;
+        flex: 1;
+        flex-basis: 0.000000001px;
       }
-      </style>
-    </custom-style>
+    </style>
   </head>
   <body>
-    <dom-bind id="demo">
-      <template is="dom-bind">
-        <header>
-          <paper-dropdown-menu label="Select demo API">
-            <paper-listbox slot="dropdown-content" id="apiList" on-selected-changed="_apiChanged">
-              <paper-item data-src="demo-api.json">Demo API</paper-item>
-              <paper-item data-src="demo-api-compact.json">Demo api - compact model</paper-item>
-            </paper-listbox>
-          </paper-dropdown-menu>
-          <div class="spacer"></div>
-        </header>
+    <div id="demo"></div>
 
-        <raml-aware raml="{{amfModel}}" scope="model"></raml-aware>
-
-        <div class="vertical-section-container centered" role="main">
-          <api-navigation aware="model" endpoints-opened></api-navigation>
-
-          <template is="dom-if" if="[[hasHeaders]]">
-            <api-headers-document opened aware="model" headers="[[headers]]"></api-headers-document>
-          </template>
-
-          <template is="dom-if" if="[[!hasHeaders]]">
-            <p>Select an endpoint in the navigation to see the demo.</p>
-          </template>
-        </div>
-
-        <demo-element id="helper" amf-model="{{amfModel}}"></demo-element>
-      </template>
-    </dom-bind>
-    <script>
-    (function(app) {
-      class DemoElement extends ApiElements.AmfHelperMixin(Polymer.Element) {}
-      window.customElements.define('demo-element', DemoElement);
-
-      app.hasHeaders = false;
-      app._load = function() {
-        document.getElementById('apiList').selected = 0;
-      };
-      app._apiChanged = function(e) {
-        const file = e.target.selectedItem.dataset.src;
-        app._loadFile(file);
-      };
-      app._loadFile = function(file) {
-        fetch('./' + file)
-        .then((response) => response.json())
-        .then((data) => {
-          app.amfModel = data;
-        });
-      };
-      app._navChanged = function(e) {
-        const type = e.detail.type;
-        if (type === 'method') {
-          app.setData(e.detail.selected);
-          app.hasHeaders = true;
-        } else {
-          app.hasHeaders = false;
-        }
-      };
-      app.setData = function(id) {
-        const webApi = app.$.helper._computeWebApi(app.amfModel);
-        const method = app.$.helper._computeMethodModel(webApi, id);
-        const expects = app.$.helper._computeExpects(method);
-        const headers = app.$.helper._computeHeaders(expects);
-        app.headers = headers;
-        //
-        // const enc = app.amfModel[0]['http://a.ml/vocabularies/document#encodes'][0];
-        // const endpoints = enc['http://a.ml/vocabularies/http#endpoint'];
-        // const endpointId = id.substr(0, id.lastIndexOf('/'));
-        // const endpoint = endpoints.find((item) => item['@id'] === endpointId);
-        // const methods = endpoint['http://www.w3.org/ns/hydra/core#supportedOperation'];
-        // const method = methods.find((item) => item['@id'] === id);
-        // const expects = method['http://www.w3.org/ns/hydra/core#expects'];
-        // const request = expects.find((item) => item['@type'].indexOf('http://a.ml/vocabularies/http#Request') !== -1);
-        // const headers = request['http://a.ml/vocabularies/http#header'];
-        // app.headers = headers;
-      };
-      window.addEventListener('WebComponentsReady', () => app._load());
-      window.addEventListener('api-navigation-selection-changed', app._navChanged);
-    })(document.getElementById('demo'));
-  </script>
+    <script type="module" src="index.js"></script>
   </body>
 </html>

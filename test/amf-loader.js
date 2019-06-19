@@ -1,18 +1,18 @@
-const AmfLoader = {};
-AmfLoader.load = function(endpointIndex, methodIndex, compact) {
+export const AmfLoader = {};
+AmfLoader.load = async function(endpointIndex, methodIndex, compact) {
   endpointIndex = endpointIndex || 0;
   methodIndex = methodIndex || 0;
   const file = '/demo-api' + (compact ? '-compact' : '') + '.json';
-  const url = location.protocol + '//' + location.host +
-    location.pathname.substr(0, location.pathname.lastIndexOf('/'))
-    .replace('/test', '/demo') + file;
+  const url = location.protocol + '//' + location.host + '/demo/'+ file;
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
     xhr.addEventListener('load', (e) => {
       let data;
       try {
         data = JSON.parse(e.target.response);
+        /* istanbul ignore next */
       } catch (e) {
+        /* istanbul ignore next */
         reject(e);
         return;
       }
@@ -34,12 +34,14 @@ AmfLoader.load = function(endpointIndex, methodIndex, compact) {
       const opKey = compact ? 'hydra:supportedOperation':
         'http://www.w3.org/ns/hydra/core#supportedOperation';
       let methods = endpoint[opKey];
+      /* istanbul ignore if */
       if (methods && !(methods instanceof Array)) {
         methods = [methods];
       }
       const method = methods[methodIndex];
       const expKey = compact ? 'hydra:expects' : 'http://www.w3.org/ns/hydra/core#expects';
       let request = method[expKey];
+      /* istanbul ignore if */
       if (request instanceof Array) {
         request = request[0];
       }
@@ -50,6 +52,7 @@ AmfLoader.load = function(endpointIndex, methodIndex, compact) {
       }
       resolve([original, headers]);
     });
+    /* istanbul ignore next */
     xhr.addEventListener('error',
       () => reject(new Error('Unable to load model file')));
     xhr.open('GET', url);
