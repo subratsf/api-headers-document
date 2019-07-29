@@ -1,5 +1,6 @@
 import { fixture, assert, nextFrame, aTimeout } from '@open-wc/testing';
 import { AmfLoader } from './amf-loader.js';
+import '@api-components/raml-aware/raml-aware.js';
 import '../api-headers-document.js';
 
 describe('<api-headers-document>', function() {
@@ -10,6 +11,60 @@ describe('<api-headers-document>', function() {
   async function narrowFixture() {
     return (await fixture(`<api-headers-document opened narrow></api-headers-document>`));
   }
+
+  async function awareFixture() {
+    return (await fixture(`<div>
+      <api-headers-document aware="test-model"></api-headers-document>
+      <raml-aware scope="test-model"></raml-aware>
+      </div>`));
+  }
+
+  describe('Raml aware', () => {
+    let element;
+    let amf;
+    before(async () => {
+      const data = await AmfLoader.load(0, 0);
+      amf = data[0];
+    });
+
+    beforeEach(async () => {
+      const region = await awareFixture();
+      element = region.querySelector('api-headers-document');
+      region.querySelector('raml-aware').api = amf;
+    });
+
+    it('renders raml-aware', () => {
+      const node = element.shadowRoot.querySelector('raml-aware');
+      assert.ok(node);
+    });
+
+    it('sets amf value from aware', async () => {
+      await aTimeout();
+      assert.typeOf(element.amf, 'array');
+    });
+  });
+
+  describe('a11y', () => {
+    let element;
+    let amf;
+    let headers;
+    before(async () => {
+      const data = await AmfLoader.load(0, 0);
+      amf = data[0];
+      headers = data[1];
+    });
+
+    beforeEach(async () => {
+      element = await openedFixture();
+      element.amf = amf;
+      element.headers = headers;
+      await aTimeout();
+    });
+
+    it('is accessible', async () => {
+      await assert.isAccessible(element);
+    });
+  });
 
   [
     ['Full AMF model', false],

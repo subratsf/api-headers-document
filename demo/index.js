@@ -1,4 +1,4 @@
-import { html, render } from 'lit-html';
+import { html } from 'lit-html';
 import { LitElement } from 'lit-element';
 import { ApiDemoPageBase } from '@advanced-rest-client/arc-demo-helper/ApiDemoPage.js';
 import '@api-components/raml-aware/raml-aware.js';
@@ -55,19 +55,13 @@ class ApiDemo extends ApiDemoPageBase {
     this.hasData = true;
   }
 
-  render() {
-    render(html `
-    ${this.headerTemplate()}
-    <raml-aware .api="${this.amf}" scope="model"></raml-aware>
-
-    <section role="main" class="centered card">
-      ${this._apiNavigationTemplate()}
-      ${this.hasData ?
-        html`<api-headers-document opened aware="model" .headers="${this.headers}"></api-headers-document>` :
-        html`<p>Select a HTTP method in the navigation to see the demo.</p>`}
-    </section>
-
-    <demo-element id="helper" .amf="${this.amf}"></demo-element>`, document.querySelector('#demo'));
+  contentTemplate() {
+    return html`
+    <demo-element id="helper" .amf="${this.amf}"></demo-element>
+    ${this.hasData ?
+      html`<api-headers-document opened aware="model" .headers="${this.headers}" ?narrow="${this.narrowActive}"></api-headers-document>` :
+      html`<p>Select a HTTP method in the navigation to see the demo.</p>`}
+    `;
   }
 }
 const instance = new ApiDemo();
