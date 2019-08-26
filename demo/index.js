@@ -1,38 +1,30 @@
 import { html } from 'lit-html';
 import { LitElement } from 'lit-element';
 import { ApiDemoPageBase } from '@advanced-rest-client/arc-demo-helper/ApiDemoPage.js';
+import { AmfHelperMixin } from '@api-components/amf-helper-mixin/amf-helper-mixin.js';
 import '@api-components/raml-aware/raml-aware.js';
 import '@api-components/api-navigation/api-navigation.js';
 import '../api-headers-document.js';
 
-import { AmfHelperMixin } from '@api-components/amf-helper-mixin/amf-helper-mixin.js';
 class DemoElement extends AmfHelperMixin(LitElement) {}
-
 window.customElements.define('demo-element', DemoElement);
+
 class ApiDemo extends ApiDemoPageBase {
   constructor() {
     super();
+    this.initObservableProperties([
+      'hasData',
+      'headers'
+    ]);
+    this.componentName = 'api-headers-document';
     this.hasData = false;
   }
 
-  get hasData() {
-    return this._hasData;
-  }
-
-  set hasData(value) {
-    this._setObservableProperty('hasData', value);
-  }
-
-  get headers() {
-    return this._headers;
-  }
-
-  set headers(value) {
-    this._setObservableProperty('headers', value);
-  }
-
   get helper() {
-    return document.getElementById('helper');
+    if (!this.__helper) {
+      this.__helper = document.getElementById('helper');
+    }
+    return this.__helper;
   }
 
   _navChanged(e) {

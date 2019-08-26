@@ -147,6 +147,33 @@ describe('<api-headers-document>', function() {
           assert.equal(fontSize, '16px');
         });
       });
+
+      describe('Title level', () => {
+        before(async () => {
+          const data = await AmfLoader.load(0, 0, item[1]);
+          amf = data[0];
+          headers = data[1];
+        });
+
+        beforeEach(async () => {
+          element = await narrowFixture();
+          element.amf = amf;
+          element.headers = headers;
+          await aTimeout();
+        });
+
+        it('sets default header level', () => {
+          const node = element.shadowRoot.querySelector('[role="heading"]');
+          assert.equal(node.getAttribute('aria-level'), '2');
+        });
+
+        it('sets header level', async () => {
+          element.headerLevel = 4;
+          await aTimeout();
+          const node = element.shadowRoot.querySelector('[role="heading"]');
+          assert.equal(node.getAttribute('aria-level'), '4');
+        });
+      });
     });
   });
 });

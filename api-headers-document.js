@@ -4,7 +4,7 @@ import '@api-components/api-type-document/api-type-document.js';
 import '@polymer/iron-collapse/iron-collapse.js';
 import '@polymer/iron-icon/iron-icon.js';
 import '@advanced-rest-client/arc-icons/arc-icons.js';
-import '@polymer/paper-button/paper-button.js';
+import '@anypoint-web-components/anypoint-button/anypoint-button.js';
 /**
  * `api-headers-document`
  *
@@ -46,24 +46,6 @@ export class ApiHeadersDocument extends LitElement {
       border-bottom: 1px var(--api-headers-document-title-border-color, #e5e5e5) solid;
     }
 
-    .section-title-area h3 {
-      flex: 1;
-      flex-basis: 0.000000001px;
-    }
-
-    .toggle-button {
-      outline: none;
-      color: var(--api-headers-document-toggle-view-color, var(--arc-toggle-view-icon-color, rgba(0, 0, 0, 0.74)));
-      transition: color 0.25s ease-in-out;
-      color: var(--toggle-button-color);
-      font-weight: var(--toggle-button-font-weight);
-    }
-
-    .toggle-button:hover {
-      color: var(--api-headers-document-toggle-view-hover-color,
-        var(--arc-toggle-view-icon-hover-color, rgba(0, 0, 0, 0.88)));
-    }
-
     .toggle-icon {
       margin-left: 8px;
       transform: rotateZ(0deg);
@@ -75,13 +57,14 @@ export class ApiHeadersDocument extends LitElement {
     }
 
     .headers-title {
+      flex: 1;
+      flex-basis: 0.000000001px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      font-size: var(--arc-font-title-font-size);
-      font-weight: var(--arc-font-title-font-weight);
-      line-height: var(--arc-font-title-line-height);
-      letter-spacing: var(--arc-font-title-letter-spacing);
+      font-size: var(--arc-font-subhead-font-size);
+      font-weight: var(--arc-font-subhead-font-weight);
+      line-height: var(--arc-font-subhead-line-height);
     }
 
     .no-info {
@@ -96,19 +79,19 @@ export class ApiHeadersDocument extends LitElement {
   }
 
   render() {
-    const { aware, opened, headers, amf, narrow } = this;
+    const { aware, opened, headers, amf, narrow, legacy, headerLevel } = this;
     const hasHeaders = !!(headers && headers.length);
     return html`
     ${aware ?
       html`<raml-aware @api-changed="${this._apiChangedHandler}" .scope="${aware}"></raml-aware>` : undefined}
 
     <div class="section-title-area" @click="${this.toggle}" title="Toogle headers details">
-      <h3 class="headers-title">Headers</h3>
+      <div class="headers-title" role="heading" aria-level="${headerLevel}">Headers</div>
       <div class="title-area-actions">
-        <paper-button class="toggle-button">
+        <anypoint-button class="toggle-button" ?legacy="${legacy}">
           ${this._computeToggleActionLabel(opened)}
           <iron-icon icon="arc:expand-more" class="${this._computeToggleIconClass(opened)}"></iron-icon>
-        </paper-button>
+        </anypoint-button>
       </div>
     </div>
 
@@ -149,11 +132,24 @@ export class ApiHeadersDocument extends LitElement {
        * A property passed to the type document element to render
        * a mogile friendly view.
        */
-      narrow: {
-        type: Boolean,
-        reflect: true
-      }
+      narrow: { type: Boolean, reflect: true },
+      /**
+       * Enables Anypoint legacy styling
+       */
+      legacy: { type: Boolean },
+      /**
+       * Type of the header in the documentation section.
+       * Should be in range of 1 to 6.
+       *
+       * @default 2
+       */
+      headerLevel: { type: Number }
     };
+  }
+
+  constructor() {
+    super();
+    this.headerLevel = 2;
   }
   /**
    * Handler for amf model change from `raml-aware`
