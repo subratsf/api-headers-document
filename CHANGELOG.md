@@ -95,3 +95,12 @@
 
 
 
+## 3.0.1 (2019-08-26)
+
+
+### Features
+
+* adding headerLevel, updating styles to match other elements ([1ec1d08](https://github.com/advanced-rest-client/api-headers-document/commit/1ec1d08))
+
+
+
