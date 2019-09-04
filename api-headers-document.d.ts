@@ -31,24 +31,9 @@ declare namespace ApiElements {
    * ```html
    * <api-headers-document headers="[...]" opened></api-headers-document>
    * ```
-   *
-   * ## Styling
-   *
-   * `<api-headers-document>` provides the following custom properties and mixins for styling:
-   *
-   * Custom property | Description | Default
-   * ----------------|-------------|----------
-   * `--api-headers-document` | Mixin applied to this elment | `{}`
-   * `--api-headers-document-title-border-color` | Border color of the title area | `#e5e5e5`
-   * `--api-headers-document-toggle-view-color` | Color of the toggle button | `--arc-toggle-view-icon-color` or `rgba(0, 0, 0, 0.74)`
-   * `--toggle-button` | Theme style, mixin apllied to toggle button | `{}`
-   * `--api-headers-document-toggle-view-hover-color` | Color of the toggle button when hovering. Please, mind that hover is not available on all devices.| `--arc-toggle-view-icon-hover-color` or `rgba(0, 0, 0, 0.88)`
-   * `--toggle-button-hover` | Theme style, mixin apllied to toggle button when hovered. | `{}`
-   * `--api-headers-document-title` | Mixin applied to the title element | `{}`
-   * `--api-headers-document-title-narrow` | Mixin applied to the title when in narrow layout | `{}`
-   * `--no-info-message` | Theme mixin, applied to all empty info messages | `{}`
    */
   class ApiHeadersDocument extends LitElement {
+    legacy: boolean|null|undefined;
 
     /**
      * `raml-aware` scope property to use.
@@ -81,6 +66,22 @@ declare namespace ApiElements {
      * a mogile friendly view.
      */
     narrow: boolean|null|undefined;
+
+    /**
+     * Enables compatibility with Anypoint components.
+     */
+    compatibility: boolean|null|undefined;
+
+    /**
+     * Type of the header in the documentation section.
+     * Should be in range of 1 to 6.
+     */
+    headerLevel: number|null|undefined;
+
+    /**
+     * Passed to `api-type-document`. Enables internal links rendering for types.
+     */
+    graph: boolean|null|undefined;
     constructor();
     render(): any;
 
