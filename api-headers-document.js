@@ -79,7 +79,7 @@ export class ApiHeadersDocument extends LitElement {
   }
 
   render() {
-    const { aware, opened, headers, amf, narrow, legacy, headerLevel } = this;
+    const { aware, opened, headers, amf, narrow, legacy, headerLevel, graph } = this;
     const hasHeaders = !!(headers && headers.length);
     return html`
     ${aware ?
@@ -97,7 +97,11 @@ export class ApiHeadersDocument extends LitElement {
 
     <iron-collapse .opened="${opened}">
       ${hasHeaders ?
-        html`<api-type-document .amf="${amf}" .type="${headers}" ?narrow="${narrow}"></api-type-document>` :
+        html`<api-type-document
+          .amf="${amf}"
+          .type="${headers}"
+          ?narrow="${narrow}"
+          ?graph="${graph}"></api-type-document>` :
         html`<p class="no-info">Headers are not required by this endpoint</p>`}
     </iron-collapse>`;
   }
@@ -143,7 +147,11 @@ export class ApiHeadersDocument extends LitElement {
        *
        * @default 2
        */
-      headerLevel: { type: Number }
+      headerLevel: { type: Number },
+      /**
+       * Passed to `api-type-document`. Enables internal links rendering for types.
+       */
+      graph: { type: Boolean }
     };
   }
 
