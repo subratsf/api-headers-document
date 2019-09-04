@@ -79,7 +79,7 @@ export class ApiHeadersDocument extends LitElement {
   }
 
   render() {
-    const { aware, opened, headers, amf, narrow, legacy, headerLevel, graph } = this;
+    const { aware, opened, headers, amf, narrow, compatibility, headerLevel, graph } = this;
     const hasHeaders = !!(headers && headers.length);
     return html`
     ${aware ?
@@ -88,7 +88,7 @@ export class ApiHeadersDocument extends LitElement {
     <div class="section-title-area" @click="${this.toggle}" title="Toogle headers details">
       <div class="headers-title" role="heading" aria-level="${headerLevel}">Headers</div>
       <div class="title-area-actions">
-        <anypoint-button class="toggle-button" ?legacy="${legacy}">
+        <anypoint-button class="toggle-button" ?compatibility="${compatibility}">
           ${this._computeToggleActionLabel(opened)}
           <iron-icon icon="arc:expand-more" class="${this._computeToggleIconClass(opened)}"></iron-icon>
         </anypoint-button>
@@ -138,9 +138,13 @@ export class ApiHeadersDocument extends LitElement {
        */
       narrow: { type: Boolean, reflect: true },
       /**
-       * Enables Anypoint legacy styling
+       * @deprecated Use `compatibility` instead
        */
       legacy: { type: Boolean },
+      /**
+       * Enables compatibility with Anypoint components.
+       */
+      compatibility: { type: Boolean },
       /**
        * Type of the header in the documentation section.
        * Should be in range of 1 to 6.
@@ -153,6 +157,14 @@ export class ApiHeadersDocument extends LitElement {
        */
       graph: { type: Boolean }
     };
+  }
+
+  get legacy() {
+    return this.compatibility;
+  }
+
+  set legacy(value) {
+    this.compatibility = value;
   }
 
   constructor() {
