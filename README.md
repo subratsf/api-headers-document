@@ -8,6 +8,11 @@
 
 Documentation component for API headers based on AMF data model.
 
+## Version compatibility
+
+This version only works with AMF model version 2 (AMF parser >= 4.0.0).
+For compatibility with previous model version use `3.x.x` version of the component.
+
 ## Styling
 
 `<api-headers-document>` provides the following custom properties and mixins for styling:
@@ -24,10 +29,6 @@ Custom property | Description | Default
 `--no-info-message-color`  |   |  `rgba(0, 0, 0, 0.74)`
 `--api-headers-document-title-narrow-font-size` |   | `17px`
 
-### API components
-
-This components is a part of [API components ecosystem](https://elements.advancedrestclient.com/)
-
 ## Usage
 
 ### Installation
@@ -42,7 +43,7 @@ npm install --save @api-components/api-headers-document
 <html>
    <head>
      <script type="module">
-       import './node_modules/@api-components/api-headers-document/api-headers-document.js';
+       import '@api-components/api-headers-document/api-headers-document.js';
      </script>
    </head>
    <body>
@@ -65,7 +66,7 @@ class SampleElement extends PolymerElement {
 customElements.define('sample-element', SampleElement);
 ```
 
-### Development
+## Development
 
 ```sh
 git clone https://github.com/api-components/api-headers-document
@@ -84,3 +85,7 @@ npm start
 ```sh
 npm test
 ```
+
+## API components
+
+This components is a part of [API components ecosystem](https://elements.advancedrestclient.com/)

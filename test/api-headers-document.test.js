@@ -1,15 +1,23 @@
-import { fixture, assert, nextFrame, aTimeout } from '@open-wc/testing';
+import { fixture, assert, html, nextFrame, aTimeout } from '@open-wc/testing';
 import { AmfLoader } from './amf-loader.js';
 import '@api-components/raml-aware/raml-aware.js';
 import '../api-headers-document.js';
 
 describe('<api-headers-document>', function() {
-  async function openedFixture() {
-    return (await fixture(`<api-headers-document opened></api-headers-document>`));
+  async function openedFixture(amf, headers) {
+    return (await fixture(html`<api-headers-document
+      opened
+      .amf="${amf}"
+      .headers="${headers}"></api-headers-document>`));
   }
 
-  async function narrowFixture() {
-    return (await fixture(`<api-headers-document opened narrow></api-headers-document>`));
+  async function narrowFixture(amf, headers) {
+    const elm = (await fixture(html`<api-headers-document
+      opened narrow
+      .amf="${amf}"
+      .headers="${headers}"></api-headers-document>`));
+    await aTimeout();
+    return elm;
   }
 
   async function awareFixture() {
@@ -23,8 +31,7 @@ describe('<api-headers-document>', function() {
     let element;
     let amf;
     before(async () => {
-      const data = await AmfLoader.load(0, 0);
-      amf = data[0];
+      amf = await AmfLoader.load();
     });
 
     beforeEach(async () => {
@@ -49,16 +56,12 @@ describe('<api-headers-document>', function() {
     let amf;
     let headers;
     before(async () => {
-      const data = await AmfLoader.load(0, 0);
-      amf = data[0];
-      headers = data[1];
+      amf = await AmfLoader.load(0, 0);
+      headers = AmfLoader.lookupHeaders(amf, '/test', 'get');
     });
 
     beforeEach(async () => {
-      element = await openedFixture();
-      element.amf = amf;
-      element.headers = headers;
-      await aTimeout();
+      element = await openedFixture(amf, headers);
     });
 
     it('is accessible', async () => {
@@ -84,8 +87,8 @@ describe('<api-headers-document>', function() {
   [
     ['Full AMF model', false],
     ['Compact AMF model', true]
-  ].forEach((item) => {
-    describe(item[0], () => {
+  ].forEach(([label, compact]) => {
+    describe(label, () => {
       let element;
       let amf;
       let headers;
@@ -93,7 +96,6 @@ describe('<api-headers-document>', function() {
       describe('No data state', () => {
         it('Renders no-info when opened', async () => {
           element = await openedFixture();
-          await aTimeout();
           const node = element.shadowRoot.querySelector('.no-info');
           assert.ok(node);
         });
@@ -101,16 +103,12 @@ describe('<api-headers-document>', function() {
 
       describe('Model operations', () => {
         before(async () => {
-          const data = await AmfLoader.load(0, 0, item[1]);
-          amf = data[0];
-          headers = data[1];
+          amf = await AmfLoader.load(compact);
+          headers = AmfLoader.lookupHeaders(amf, '/test', 'get');
         });
 
         beforeEach(async () => {
-          element = await openedFixture();
-          element.amf = amf;
-          element.headers = headers;
-          await aTimeout();
+          element = await openedFixture(amf, headers);
         });
 
         it('api-type-document is rendered', () => {
@@ -134,16 +132,12 @@ describe('<api-headers-document>', function() {
 
       describe('Narrow layout', () => {
         before(async () => {
-          const data = await AmfLoader.load(0, 0, item[1]);
-          amf = data[0];
-          headers = data[1];
+          amf = await AmfLoader.load(compact);
+          headers = AmfLoader.lookupHeaders(amf, '/test', 'get');
         });
 
         beforeEach(async () => {
-          element = await narrowFixture();
-          element.amf = amf;
-          element.headers = headers;
-          await aTimeout();
+          element = await narrowFixture(amf, headers);
         });
 
         it('Has narrow attribute', () => {
@@ -165,16 +159,12 @@ describe('<api-headers-document>', function() {
 
       describe('Title level', () => {
         before(async () => {
-          const data = await AmfLoader.load(0, 0, item[1]);
-          amf = data[0];
-          headers = data[1];
+          amf = await AmfLoader.load(compact);
+          headers = AmfLoader.lookupHeaders(amf, '/test', 'get');
         });
 
         beforeEach(async () => {
-          element = await narrowFixture();
-          element.amf = amf;
-          element.headers = headers;
-          await aTimeout();
+          element = await narrowFixture(amf, headers);
         });
 
         it('sets default header level', () => {
