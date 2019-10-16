@@ -42,6 +42,11 @@ export class ApiHeadersDocument extends LitElement {
       -ms-user-select: none;
       user-select: none;
       border-bottom: 1px var(--api-headers-document-title-border-color, #e5e5e5) solid;
+      transition: border-bottom-color 0.15s ease-in-out;
+    }
+
+    .section-title-area[opened] {
+      border-bottom-color: transparent;
     }
 
     .toggle-icon {
@@ -90,7 +95,12 @@ export class ApiHeadersDocument extends LitElement {
     ${aware ?
       html`<raml-aware @api-changed="${this._apiChangedHandler}" .scope="${aware}"></raml-aware>` : undefined}
 
-    <div class="section-title-area" @click="${this.toggle}" title="Toogle headers details">
+    <div
+      class="section-title-area"
+      @click="${this.toggle}"
+      title="Toogle headers details"
+      ?opened="${opened}"
+    >
       <div class="headers-title" role="heading" aria-level="${headerLevel}">Headers</div>
       <div class="title-area-actions">
         <anypoint-button class="toggle-button" ?compatibility="${compatibility}">
