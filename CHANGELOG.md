@@ -114,3 +114,13 @@
 
 
 
+## 4.0.1 (2019-10-16)
+
+
+### Features
+
+* adding `graph` proeprty for internal linking ([2e4b53e](https://github.com/advanced-rest-client/api-headers-document/commit/2e4b53e))
+* adding headerLevel, updating styles to match other elements ([1ec1d08](https://github.com/advanced-rest-client/api-headers-document/commit/1ec1d08))
+
+
+
