@@ -116,7 +116,9 @@ export class ApiHeadersDocument extends LitElement {
           .amf="${amf}"
           .type="${headers}"
           ?narrow="${narrow}"
-          ?graph="${graph}"></api-type-document>` :
+          ?graph="${graph}"
+          noExamplesActions
+        ></api-type-document>` :
         html`<p class="no-info">Headers are not required by this endpoint</p>`}
     </iron-collapse>`;
   }
