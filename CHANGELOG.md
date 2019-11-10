@@ -134,3 +134,14 @@
 
 
 
+## 4.0.3 (2019-11-10)
+
+
+### Features
+
+* adding `graph` proeprty for internal linking ([2e4b53e](https://github.com/advanced-rest-client/api-headers-document/commit/2e4b53ef588f1a2ae1f4bd48f7cad499cd03f053))
+* adding `noExamplesActions` to type document ([de71aa9](https://github.com/advanced-rest-client/api-headers-document/commit/de71aa9c9c392212431fdaa1993be70b57e79870))
+* adding headerLevel, updating styles to match other elements ([1ec1d08](https://github.com/advanced-rest-client/api-headers-document/commit/1ec1d088ab21c6813c19280cee45f0d0f6839400))
+
+
+
