@@ -93,7 +93,7 @@ export class ApiHeadersDocument extends LitElement {
     const hasHeaders = !!(headers && headers.length);
     return html`<style>${this.styles}</style>
     ${aware ?
-      html`<raml-aware @api-changed="${this._apiChangedHandler}" .scope="${aware}"></raml-aware>` : undefined}
+      html`<raml-aware @api-changed="${this._apiChangedHandler}" .scope="${aware}"></raml-aware>` : ''}
 
     <div
       class="section-title-area"
