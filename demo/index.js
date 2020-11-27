@@ -39,7 +39,7 @@ class ApiDemo extends ApiDemoPageBase {
 
   setData(id) {
     const helper = this.helper;
-    const webApi = helper._computeWebApi(this.amf);
+    const webApi = helper._computeApi(this.amf);
     const method = helper._computeMethodModel(webApi, id);
     const expects = helper._computeExpects(method);
     const headers = helper._computeHeaders(expects);
@@ -47,11 +47,21 @@ class ApiDemo extends ApiDemoPageBase {
     this.hasData = true;
   }
 
+  _apiListTemplate() {
+    return [
+      ['demo-api', 'Demo API'],
+      ['async-api', 'Async API'],
+    ].map(([file, label]) => html`
+      <anypoint-item data-src="${file}-compact.json">${label} - compact model</anypoint-item>
+      <anypoint-item data-src="${file}.json">${label}</anypoint-item>
+      `);
+  }
+
   contentTemplate() {
     return html`
     <demo-element id="helper" .amf="${this.amf}"></demo-element>
     ${this.hasData ?
-      html`<api-headers-document opened aware="model" .headers="${this.headers}" ?narrow="${this.narrowActive}"></api-headers-document>` :
+      html`<api-headers-document .amf="${this.amf}" opened aware="model" .headers="${this.headers}" ?narrow="${this.narrowActive}"></api-headers-document>` :
       html`<p>Select a HTTP method in the navigation to see the demo.</p>`}
     `;
   }
