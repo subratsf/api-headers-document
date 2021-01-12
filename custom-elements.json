@@ -1,0 +1,83 @@
+{
+  "version": "experimental",
+  "tags": [
+    {
+      "name": "api-headers-document",
+      "path": "./api-headers-document.js",
+      "description": "`api-headers-document`\n\nA documentation for API headers.\n\nIt uses [AMF](https://github.com/mulesoft/amf) json/ld model to render\nthe view.\n\n## Example\n\n```html\n<api-headers-document headers=\"[...]\" opened></api-headers-document>",
+      "attributes": [
+        {
+          "name": "opened",
+          "description": "Set to true to open the view.\nAutomatically set when the view is toggle from the UI.",
+          "type": "boolean"
+        },
+        {
+          "name": "narrow",
+          "description": "A property passed to the type document element to render a mobile friendly view.",
+          "type": "boolean"
+        },
+        {
+          "name": "compatibility",
+          "description": "Enables compatibility with Anypoint components.",
+          "type": "boolean"
+        },
+        {
+          "name": "headerLevel",
+          "description": "Type of the header in the documentation section.\nShould be in range of 1 to 6.",
+          "type": "number",
+          "default": "\"2\""
+        },
+        {
+          "name": "graph",
+          "description": "Passed to `api-type-document`. Enables internal links rendering for types.",
+          "type": "boolean"
+        }
+      ],
+      "properties": [
+        {
+          "name": "styles",
+          "type": "CSSResult"
+        },
+        {
+          "name": "amf",
+          "description": "Generated AMF json/ld model form the API spec.\nThe element assumes the object of the first array item to be a\ntype of `\"http://raml.org/vocabularies/document#Document`\non AMF vocabulary.\n\nIt is only useful for the element to resolve references."
+        },
+        {
+          "name": "headers",
+          "description": "The headers AMF model Array."
+        },
+        {
+          "name": "opened",
+          "attribute": "opened",
+          "description": "Set to true to open the view.\nAutomatically set when the view is toggle from the UI.",
+          "type": "boolean"
+        },
+        {
+          "name": "narrow",
+          "attribute": "narrow",
+          "description": "A property passed to the type document element to render a mobile friendly view.",
+          "type": "boolean"
+        },
+        {
+          "name": "compatibility",
+          "attribute": "compatibility",
+          "description": "Enables compatibility with Anypoint components.",
+          "type": "boolean"
+        },
+        {
+          "name": "headerLevel",
+          "attribute": "headerLevel",
+          "description": "Type of the header in the documentation section.\nShould be in range of 1 to 6.",
+          "type": "number",
+          "default": "\"2\""
+        },
+        {
+          "name": "graph",
+          "attribute": "graph",
+          "description": "Passed to `api-type-document`. Enables internal links rendering for types.",
+          "type": "boolean"
+        }
+      ]
+    }
+  ]
+}

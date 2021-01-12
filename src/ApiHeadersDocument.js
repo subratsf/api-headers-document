@@ -1,8 +1,9 @@
+/* eslint-disable lit-a11y/click-events-have-key-events */
+/* eslint-disable class-methods-use-this */
 import { LitElement, html, css } from 'lit-element';
-import '@api-components/raml-aware/raml-aware.js';
 import '@api-components/api-type-document/api-type-document.js';
-import '@polymer/iron-collapse/iron-collapse.js';
-import { expandMore } from '@advanced-rest-client/arc-icons/ArcIcons.js';
+import '@anypoint-web-components/anypoint-collapse/anypoint-collapse.js';
+import '@advanced-rest-client/arc-icons/arc-icon.js';
 import '@anypoint-web-components/anypoint-button/anypoint-button.js';
 /**
  * `api-headers-document`
@@ -16,11 +17,6 @@ import '@anypoint-web-components/anypoint-button/anypoint-button.js';
  *
  * ```html
  * <api-headers-document headers="[...]" opened></api-headers-document>
- * ```
- *
- * @customElement
- * @demo demo/index.html
- * @memberof ApiElements
  */
 export class ApiHeadersDocument extends LitElement {
   get styles() {
@@ -45,7 +41,7 @@ export class ApiHeadersDocument extends LitElement {
       transition: border-bottom-color 0.15s ease-in-out;
     }
 
-    .section-title-area[opened] {
+    .section-title-area[data-opened] {
       border-bottom-color: transparent;
     }
 
@@ -89,28 +85,25 @@ export class ApiHeadersDocument extends LitElement {
   }
 
   render() {
-    const { aware, opened, headers, amf, narrow, compatibility, headerLevel, graph } = this;
+    const { opened, headers, amf, narrow, compatibility, headerLevel, graph } = this;
     const hasHeaders = !!(headers) && (!!headers.length || !!Object.keys(headers).length);
     return html`<style>${this.styles}</style>
-    ${aware ?
-      html`<raml-aware @api-changed="${this._apiChangedHandler}" .scope="${aware}"></raml-aware>` : ''}
-
     <div
       class="section-title-area"
       @click="${this.toggle}"
-      title="Toogle headers details"
-      ?opened="${opened}"
+      title="Toggle headers details"
+      ?data-opened="${opened}"
     >
       <div class="headers-title" role="heading" aria-level="${headerLevel}">Headers</div>
       <div class="title-area-actions">
         <anypoint-button class="toggle-button" ?compatibility="${compatibility}">
           ${this._computeToggleActionLabel(opened)}
-          <span class="icon ${this._computeToggleIconClass(opened)}">${expandMore}</span>
+          <arc-icon class="icon ${this._computeToggleIconClass(opened)}" icon="expandMore"></arc-icon>
         </anypoint-button>
       </div>
     </div>
 
-    <iron-collapse .opened="${opened}">
+    <anypoint-collapse .opened="${opened}">
       ${hasHeaders ?
         html`<api-type-document
           .amf="${amf}"
@@ -120,24 +113,18 @@ export class ApiHeadersDocument extends LitElement {
           noExamplesActions
         ></api-type-document>` :
         html`<p class="no-info">Headers are not required by this endpoint</p>`}
-    </iron-collapse>`;
+    </anypoint-collapse>`;
   }
 
   static get properties() {
     return {
-      /**
-       * `raml-aware` scope property to use.
-       */
-      aware: { type: String },
       /**
        * Generated AMF json/ld model form the API spec.
        * The element assumes the object of the first array item to be a
        * type of `"http://raml.org/vocabularies/document#Document`
        * on AMF vocabulary.
        *
-       * It is only usefult for the element to resolve references.
-       *
-       * @type {Object|Array}
+       * It is only useful for the element to resolve references.
        */
       amf: { type: Object },
       /**
@@ -146,18 +133,13 @@ export class ApiHeadersDocument extends LitElement {
       headers: { type: Array },
       /**
        * Set to true to open the view.
-       * Autormatically set when the view is toggle from the UI.
+       * Automatically set when the view is toggle from the UI.
        */
       opened: { type: Boolean },
       /**
-       * A property passed to the type document element to render
-       * a mogile friendly view.
+       * A property passed to the type document element to render a mobile friendly view.
        */
       narrow: { type: Boolean, reflect: true },
-      /**
-       * @deprecated Use `compatibility` instead
-       */
-      legacy: { type: Boolean },
       /**
        * Enables compatibility with Anypoint components.
        */
@@ -172,33 +154,21 @@ export class ApiHeadersDocument extends LitElement {
       /**
        * Passed to `api-type-document`. Enables internal links rendering for types.
        */
-      graph: { type: Boolean }
+      graph: { type: Boolean },
     };
-  }
-
-  get legacy() {
-    return this.compatibility;
-  }
-
-  set legacy(value) {
-    this.compatibility = value;
   }
 
   constructor() {
     super();
     this.headerLevel = 2;
-  }
-  /**
-   * Handler for amf model change from `raml-aware`
-   * @param {CustomEvent} e
-   */
-  _apiChangedHandler(e) {
-    const { value } = e.detail;
-    setTimeout(() => {
-      this.amf = value;
-      // For some reson this value is not reflected in the render function
-      // unles it is delayed
-    });
+    /**
+     * @type {any[]}
+     */
+    this.headers = undefined;
+    this.amf = undefined;
+    this.narrow = false;
+    this.compatibility = false;
+    this.graph = false;
   }
 
   // Computes a label for the section toggle buttons.
@@ -208,12 +178,13 @@ export class ApiHeadersDocument extends LitElement {
 
   // Computes class for the toggle's button icon.
   _computeToggleIconClass(opened) {
-    let clazz = 'toggle-icon';
+    let classes = 'toggle-icon';
     if (opened) {
-      clazz += ' opened';
+      classes += ' opened';
     }
-    return clazz;
+    return classes;
   }
+
   /**
    * Toggles the view.
    * Use `opened` property instead.

@@ -1,58 +1,34 @@
 import { fixture, assert, html, nextFrame, aTimeout } from '@open-wc/testing';
 import { AmfLoader } from './amf-loader.js';
-import '@api-components/raml-aware/raml-aware.js';
 import '../api-headers-document.js';
 
-describe('<api-headers-document>', function() {
+/** @typedef {import('..').ApiHeadersDocument} ApiHeadersDocument */
+
+describe('ApiHeadersDocument', () => {
+  /**
+   * @returns {Promise<ApiHeadersDocument>}
+   */
   async function openedFixture(amf, headers) {
-    return (await fixture(html`<api-headers-document
+    return (fixture(html`<api-headers-document
       opened
       .amf="${amf}"
       .headers="${headers}"></api-headers-document>`));
   }
 
+  /**
+   * @returns {Promise<ApiHeadersDocument>}
+   */
   async function narrowFixture(amf, headers) {
-    const elm = (await fixture(html`<api-headers-document
+    const elm = /** @type ApiHeadersDocument */ (await fixture(html`<api-headers-document
       opened narrow
       .amf="${amf}"
       .headers="${headers}"></api-headers-document>`));
-    await aTimeout();
+    await aTimeout(0);
     return elm;
   }
 
-  async function awareFixture() {
-    return (await fixture(`<div>
-      <api-headers-document aware="test-model"></api-headers-document>
-      <raml-aware scope="test-model"></raml-aware>
-      </div>`));
-  }
-
-  describe('Raml aware', () => {
-    let element;
-    let amf;
-    before(async () => {
-      amf = await AmfLoader.load();
-    });
-
-    beforeEach(async () => {
-      const region = await awareFixture();
-      element = region.querySelector('api-headers-document');
-      region.querySelector('raml-aware').api = amf;
-    });
-
-    it('renders raml-aware', () => {
-      const node = element.shadowRoot.querySelector('raml-aware');
-      assert.ok(node);
-    });
-
-    it('sets amf value from aware', async () => {
-      await aTimeout();
-      assert.typeOf(element.amf, 'array');
-    });
-  });
-
   describe('a11y', () => {
-    let element;
+    let element = /** @type ApiHeadersDocument */ (null);
     let amf;
     let headers;
     before(async () => {
@@ -69,27 +45,12 @@ describe('<api-headers-document>', function() {
     });
   });
 
-  describe('compatibility mode', () => {
-    it('sets compatibility on item when setting legacy', async () => {
-      const element = await openedFixture();
-      element.legacy = true;
-      assert.isTrue(element.legacy, 'legacy is set');
-      assert.isTrue(element.compatibility, 'compatibility is set');
-    });
-
-    it('returns compatibility value from item when getting legacy', async () => {
-      const element = await openedFixture();
-      element.compatibility = true;
-      assert.isTrue(element.legacy, 'legacy is set');
-    });
-  });
-
   [
     ['Full AMF model', false],
     ['Compact AMF model', true]
   ].forEach(([label, compact]) => {
-    describe(label, () => {
-      let element;
+    describe(String(label), () => {
+      let element = /** @type ApiHeadersDocument */ (null);
       let amf;
       let headers;
 
@@ -122,10 +83,10 @@ describe('<api-headers-document>', function() {
         });
 
         it('Toggle button hides the table', async () => {
-          const button = element.shadowRoot.querySelector('.section-title-area');
+          const button = /** @type HTMLElement */ (element.shadowRoot.querySelector('.section-title-area'));
           button.click();
           await nextFrame();
-          const collapse = element.shadowRoot.querySelector('iron-collapse');
+          const collapse = element.shadowRoot.querySelector('anypoint-collapse');
           assert.isFalse(collapse.opened);
         });
       });
@@ -152,7 +113,7 @@ describe('<api-headers-document>', function() {
         it('Narrow style is applied to the title', async () => {
           element.style.setProperty('--api-headers-document-title-narrow-font-size', '16px');
           const title = element.shadowRoot.querySelector('.headers-title');
-          const fontSize = getComputedStyle(title).fontSize;
+          const { fontSize } = getComputedStyle(title);
           assert.equal(fontSize, '16px');
         });
       });
@@ -174,7 +135,7 @@ describe('<api-headers-document>', function() {
 
         it('sets header level', async () => {
           element.headerLevel = 4;
-          await aTimeout();
+          await aTimeout(0);
           const node = element.shadowRoot.querySelector('[role="heading"]');
           assert.equal(node.getAttribute('aria-level'), '4');
         });
