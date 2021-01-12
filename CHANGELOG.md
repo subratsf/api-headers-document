@@ -259,3 +259,12 @@
  [ba555c0](https://github.com/advanced-rest-client/api-headers-document/commit/ba555c08e52795def3e2cba06d2073aaa3c6f83a) by Pawel Psztyc
 
 
+<a name="4.2.0"></a>
+## [4.2.0](https://github.com/advanced-rest-client/api-headers-document/compare/4.0.4...4.2.0) (2021-01-12)
+
+### Update
+
+* upgrading depndencies and types [6627851](https://github.com/advanced-rest-client/api-headers-document/commit/6627851151854106134c095f3f109ed6a5e9bd15) by Pawel Psztyc
+* [ci skip] automated merge master->stage. syncing main branches [8aee83f](https://github.com/advanced-rest-client/api-headers-document/commit/8aee83f44d4575a2d7882b235c7b7e1cd3aabbcf) by Ci agent
+
+
