@@ -1,32 +1,15 @@
-[![Published on NPM](https://img.shields.io/npm/v/@api-components/api-headers-document.svg)](https://www.npmjs.com/package/@api-components/api-headers-document)
-
-[![Build Status](https://travis-ci.org/advanced-rest-client/api-headers-document.svg?branch=stage)](https://travis-ci.org/advanced-rest-client/api-headers-document)
-
-[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/advanced-rest-client/api-headers-document)
-
-## api-headers-document
+# api-headers-document
 
 Documentation component for API headers based on AMF data model.
+
+[![Published on NPM](https://img.shields.io/npm/v/@api-components/api-headers-document.svg)](https://www.npmjs.com/package/@api-components/api-headers-document)
+
+[![Tests and publishing](https://github.com/advanced-rest-client/api-headers-document/actions/workflows/deployment.yml/badge.svg)](https://github.com/advanced-rest-client/api-headers-document/actions/workflows/deployment.yml)
 
 ## Version compatibility
 
 This version only works with AMF model version 2 (AMF parser >= 4.0.0).
 For compatibility with previous model version use `3.x.x` version of the component.
-
-## Styling
-
-`<api-headers-document>` provides the following custom properties and mixins for styling:
-
-Custom property | Description | Default
-----------------|-------------|----------
-`--arc-font-subhead-color` | Color of the collapsible section title | ``
-`--arc-font-subhead-font-size` | Font size of the collapsible section title | ``
-`--arc-font-subhead-line-height` | Line height of the collapsible section title | ``
-`--arc-font-subhead-narrow-font-size` | Font size of the collapsible section title in mobile-friendly view | ``
-`--api-parameters-document-title-border-color` | Border color of the collapsible section title area | `#e5e5e5`
-`--no-info-message-font-style` |   |  `italic`
-`--no-info-message-font-size`  |   |  `16px`
-`--no-info-message-color`  |   |  `rgba(0, 0, 0, 0.74)`
 
 ## Usage
 
@@ -84,7 +67,3 @@ npm start
 ```sh
 npm test
 ```
-
-## API components
-
-This component is a part of [API components ecosystem](https://elements.advancedrestclient.com/)
