@@ -111,8 +111,8 @@ describe('ApiHeadersDocument', () => {
         });
 
         it('Narrow style is applied to the title', async () => {
-          element.style.setProperty('--api-headers-document-title-narrow-font-size', '16px');
-          const title = element.shadowRoot.querySelector('.headers-title');
+          element.style.setProperty('--arc-font-subhead-narrow-font-size', '16px');
+          const title = element.shadowRoot.querySelector('.heading3');
           const { fontSize } = getComputedStyle(title);
           assert.equal(fontSize, '16px');
         });
