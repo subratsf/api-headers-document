@@ -91,7 +91,7 @@ export class ApiHeadersDocument extends LitElement {
       >
         <div class="heading3" role="heading" aria-level="${headerLevel}">Headers</div>
         <div class="title-area-actions" data-toggle="headers">
-          <anypoint-button class="toggle-button" ?compatibility="${compatibility}">
+          <anypoint-button class="toggle-button" ?compatibility="${compatibility}" data-toggle="headers">
             ${this._computeToggleActionLabel(opened)}
             <arc-icon class="icon ${this._computeToggleIconClass(opened)}" icon="expandMore"></arc-icon>
           </anypoint-button>
