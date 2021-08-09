@@ -82,32 +82,34 @@ export class ApiHeadersDocument extends LitElement {
     const { opened, headers, amf, narrow, compatibility, headerLevel, graph } = this;
     const hasHeaders = !!(headers) && (!!headers.length || !!Object.keys(headers).length);
     return html`<style>${this.styles}</style>
-    <div
-      class="section-title-area"
-      @click="${this.toggle}"
-      title="Toggle headers details"
-      ?data-opened="${opened}"
-    >
-      <div class="heading3" role="heading" aria-level="${headerLevel}">Headers</div>
-      <div class="title-area-actions">
-        <anypoint-button class="toggle-button" ?compatibility="${compatibility}">
-          ${this._computeToggleActionLabel(opened)}
-          <arc-icon class="icon ${this._computeToggleIconClass(opened)}" icon="expandMore"></arc-icon>
-        </anypoint-button>
+    <section class="headers">
+      <div
+        class="section-title-area"
+        @click="${this.toggle}"
+        title="Toggle headers details"
+        ?data-opened="${opened}"
+      >
+        <div class="heading3" role="heading" aria-level="${headerLevel}">Headers</div>
+        <div class="title-area-actions" data-toggle="headers">
+          <anypoint-button class="toggle-button" ?compatibility="${compatibility}">
+            ${this._computeToggleActionLabel(opened)}
+            <arc-icon class="icon ${this._computeToggleIconClass(opened)}" icon="expandMore"></arc-icon>
+          </anypoint-button>
+        </div>
       </div>
-    </div>
-
-    <anypoint-collapse .opened="${opened}">
-      ${hasHeaders ?
-        html`<api-type-document
-          .amf="${amf}"
-          .type="${headers}"
-          ?narrow="${narrow}"
-          ?graph="${graph}"
-          noExamplesActions
-        ></api-type-document>` :
-        html`<p class="no-info">Headers are not required by this endpoint</p>`}
-    </anypoint-collapse>`;
+  
+      <anypoint-collapse .opened="${opened}">
+        ${hasHeaders ?
+          html`<api-type-document
+            .amf="${amf}"
+            .type="${headers}"
+            ?narrow="${narrow}"
+            ?graph="${graph}"
+            noExamplesActions
+          ></api-type-document>` :
+          html`<p class="no-info">Headers are not required by this endpoint</p>`}
+      </anypoint-collapse>
+    </section>`;
   }
 
   static get properties() {
